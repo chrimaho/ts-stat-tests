@@ -4,6 +4,8 @@ Pipfile
 .vscode/
 .pytest_cache/
 .mypy_cache/
+cov-report/
+.coverage/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
