@@ -28,4 +28,4 @@ jobs:
           pipenv run pytest --cov=ts-stat-tests
 
       - name: Upload
-        uses: codecov/codecov-actions@v2
+        uses: codecov/codecov-action@v2
