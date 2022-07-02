@@ -25,14 +25,14 @@ repos:
     rev: v2.6.0
     hooks:
       - id: reorder-python-imports
-        args: ["--application-directories=.:ts-stat-tests", "--py310"]
+        args: ["--application-directories=.:ts-stat-tests", "--py37-plus"]
 
   # Find any outdated syntax and replace with modern equivalents
   - repo: https://github.com/asottile/pyupgrade
     rev: v2.29.0
     hooks:
       - id: pyupgrade
-        args: ["--py310"]
+        args: ["--py37-plus"]
 
   # Run MyPy type checks
   - repo: https://github.com/pre-commit/mirrors-mypy
