@@ -3,6 +3,7 @@
 Pipfile
 .vscode/
 .pytest_cache/
+.mypy_cache/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
