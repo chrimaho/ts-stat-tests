@@ -1,6 +1,6 @@
 from ts_stat_tests.stability import is_stable
 from ts_stat_tests.stability import stability
-from ts_stat_tests.tests import BaseTester
+from ts_stat_tests.tests.test_base import BaseTester
 
 
 class StabilityTests(BaseTester):
