@@ -26,7 +26,7 @@ jobs:
 
       - name: Test
         run: |
-          pipenv run pytest --cov=ts-stat-tests
+          pipenv run pytest --cov=ts_stat_tests
 
       - name: Upload
         uses: codecov/codecov-action@v2
