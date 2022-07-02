@@ -39,5 +39,5 @@ repos:
     rev: v0.910
     hooks:
       - id: mypy
-        files: ^ts-stat-tests/
-        args: []
+        files: ^ts_tat_tests/
+        args: ["--ignore-missing-imports", "--pretty", "--install-types", "--non-interactive"]
