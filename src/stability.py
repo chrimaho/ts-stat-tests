@@ -9,18 +9,18 @@ from tsfeatures import stability as ts_stability
 
 
 # ------------------------------------------------------------------------------#
-# Stability                                                                 ####
+# Stability                                                                  ####
 # ------------------------------------------------------------------------------#
 
 
 # overwrite_docs_from(parent_function=ts_stability)
-def stability(data: Union[np.array, pd.DataFrame, pd.Series], freq: int = 1) -> float:
+def stability(data: Union[np.ndarray, pd.DataFrame, pd.Series], freq: int = 1) -> float:
     """
     !!! Summary
         Test for stability.
 
     Params:
-        data (Union[np.array, pd.DataFrame, pd.Series]):
+        data (Union[np.ndarray, pd.DataFrame, pd.Series]):
             The time series.
         freq (int, optional):
             Frequency of the time series
@@ -48,14 +48,14 @@ def stability(data: Union[np.array, pd.DataFrame, pd.Series], freq: int = 1) -> 
 
 
 def is_stable(
-    data: Union[np.array, pd.DataFrame, pd.Series], freq: int = 1, alpha: float = 0.5
+    data: Union[np.ndarray, pd.DataFrame, pd.Series], freq: int = 1, alpha: float = 0.5
 ) -> bool:
     """
     !!! Summary
         Check whether a data series is stable or not.
 
     Params:
-        data (Union[np.array, pd.DataFrame, pd.Series]):
+        data (Union[np.ndarray, pd.DataFrame, pd.Series]):
             The time series.
         freq (int, optional):
             The frequency of the time series. Defaults to `1`.
@@ -85,17 +85,17 @@ def is_stable(
 
 
 # ------------------------------------------------------------------------------#
-# Lumpiness                                                                 ####
+# Lumpiness                                                                  ####
 # ------------------------------------------------------------------------------#
 
 
-def lumpiness(data: Union[np.array, pd.DataFrame, pd.Series], freq: int = 1) -> float:
+def lumpiness(data: Union[np.ndarray, pd.DataFrame, pd.Series], freq: int = 1) -> float:
     """
     !!! Summary
         Test for lumpiness.
 
     Params:
-        data (Union[np.array, pd.DataFrame, pd.Series]):
+        data (Union[np.ndarray, pd.DataFrame, pd.Series]):
             The time series.
         freq (int, optional):
             Frequency of the time series
@@ -123,14 +123,14 @@ def lumpiness(data: Union[np.array, pd.DataFrame, pd.Series], freq: int = 1) -> 
 
 
 def is_lumpy(
-    data: Union[np.array, pd.DataFrame, pd.Series], freq: int = 1, alpha: float = 0.5
+    data: Union[np.ndarray, pd.DataFrame, pd.Series], freq: int = 1, alpha: float = 0.5
 ) -> bool:
     """
     !!! Summary
         Check whether a data series is lumpy or not.
 
     Params:
-        data (Union[np.array, pd.DataFrame, pd.Series]):
+        data (Union[np.ndarray, pd.DataFrame, pd.Series]):
             The time series.
         freq (int, optional):
             The frequency of the time series. Defaults to `1`.
