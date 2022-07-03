@@ -1,0 +1,101 @@
+<!-- <head> -->
+  <link rel="stylesheet" href="../assets/stylesheets/main.ac279ee9.min.css">
+  <link rel="stylesheet" href="../assets/stylesheets/main.7523f5de.min.css">
+  <link rel="stylesheet" href="../assets/stylesheets/palette.1d832a92.min.css">
+<!-- </head> -->
+{% extends "main.html" %}
+
+<!-- Render hero under tabs -->
+{% block tabs %}
+  {{ super() }}
+
+  <!-- Additional styles for landing page -->
+  <style>
+
+    /* Application header should be static for the landing page */
+    .md-header {
+      position: initial;
+    }
+
+    /* Remove spacing, as we cannot hide it completely */
+    .md-main__inner {
+      margin: 0;
+    }
+
+    /* Hide main content for now */
+    .md-content {
+      display: none;
+    }
+
+    /* Hide table of contents */
+    @media screen and (min-width: 60em) {
+      .md-sidebar--secondary {
+        display: none;
+      }
+    }
+
+    /* Hide navigation */
+    @media screen and (min-width: 76.25em) {
+      .md-sidebar--primary {
+        display: none;
+      }
+    }
+
+  </style>
+
+  <!-- Hero for landing page -->
+  <section class="mdx-container">
+    <div class="md-grid md-typeset">
+      <div class="mdx-hero">
+
+        <!-- Hero image -->
+        <!-- src="https://acropolis-wp-content-uploads.s3.us-west-1.amazonaws.com/l-shape-warehouse-layout-1.png" -->
+        <!-- src="https://www.qualikom.com/wp-content/uploads/2021/01/imgbin_graphics-warehouse-logistics-illustration-png.png" -->
+        <!-- src="https://library.kissclipart.com/20181112/zsw/kissclipart-floor-plan-clipart-logistics-warehouse-7796c6328eb76d2d.png" -->
+        <!-- src="https://mpng.subpng.com/20190518/vzb/kisspng-isometric-projection-vector-graphics-logistics-ill-wms-5ce086c1c2b301.2650840815582184337975.jpg" -->
+        <!-- style="border:5px; border-radius:10px; box-shadow:0 0 10px #bbb" -->
+        <div class="mdx-hero__image">
+          <div style="text-align:center">
+            <img
+            src="https://cdn-icons-png.flaticon.com/512/1205/1205526.png"
+            alt=""
+            width="40%"
+            draggable="false"
+            style="justify-content:center; text-align:center; margin-right:50%;"
+            >
+            <p style="color:black; text-align:center; margin-right:50%;">(image source <a href="https://cdn-icons-png.flaticon.com/512/1205/1205526.png">Free Icons</a>)</p>
+          </div>
+        </div>
+
+        <!-- Hero content -->
+        <div class="mdx-hero__content">
+          <h1 style="color:white; font-weight:700; margin-bottom: 1rem">{{ config.site_name }}</h1>
+          <!-- <p>{{ config.site_description }}</p> -->
+          <p>{{ config.site_description }}</p>
+          <a
+            href="{{ page.next_page.url | url }}"
+            title="{{ page.next_page.title | e }}"
+            class="md-button md-button--primary"
+            style="color:#526cfe; border-color:white; background-color:white"
+          >
+            Docs
+          </a>
+          <a
+            href="{{ '/docs/src/overview/' | url }}"
+            title="Code"
+            class="md-button"
+            style="color:white; background-color:opacity 0; border-color:white"
+          >
+            Code
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+<!-- Content -->
+{% block content %}{% endblock %}
+
+<!-- Application footer -->
+{% block footer %}{% endblock %}

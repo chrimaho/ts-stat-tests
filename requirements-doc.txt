@@ -1,0 +1,10 @@
+mkdocs
+mkdocs-material
+mkdocs-coverage
+mkdocs-section-index
+mkdocs-autorefs
+mkdocs-enumerate-headings-plugin
+mkdocstrings
+mkdocstrings-python
+pytkdocs
+livereload
