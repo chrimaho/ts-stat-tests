@@ -1,3 +1,6 @@
+from tsfeatures import lumpiness as ts_lumpiness
+from tsfeatures import stability as ts_stability
+
 from src.stability import is_lumpy
 from src.stability import is_stable
 from src.stability import lumpiness
@@ -13,7 +16,9 @@ class StabilityTests(BaseTester):
         self.is_lumpy = is_lumpy(self.data)
 
     def test_stability(self):
-        self.assertEqual(self.stability, 12702.672087912088)
+        self.assertEqual(self.stability, ts_stability(self.data)["stability"])
         self.assertTrue(self.is_stable)
-        self.assertEqual(self.lumpiness, 5558930.856730431)
+
+    def test_lumpiness(self):
+        self.assertEqual(self.lumpiness, ts_lumpiness(self.data)["lumpiness"])
         self.assertTrue(self.is_lumpy)
