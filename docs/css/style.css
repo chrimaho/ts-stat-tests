@@ -7,13 +7,17 @@ div.doc-contents:not(.first) {
 */
 
 div.doc-method, div.doc-function {
-    padding-left: 25px;
-    border-left: 4px solid rgba(230, 230, 230);
-    }
+  padding-left: 25px;
+  border-left: 4px solid rgba(230, 230, 230);
+}
 
-div.doc-object:not(div.doc-class) {
-  margin-top: 100px;
+div.doc-object:is(div.doc-module) {
   margin-bottom: 100px;
+}
+
+div.doc-object div.doc-method, div.doc-object div.doc-function {
+  margin-top: 60px;
+  margin-bottom: 60px;
 }
 
 .anchor {
