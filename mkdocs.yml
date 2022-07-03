@@ -61,6 +61,7 @@ nav:
   - Code:
     - Tests:
       - Stability: docs/code/stability.md
+      - Correlation: docs/code/correlation.md
 
 extra_css:
   - css/style.css
