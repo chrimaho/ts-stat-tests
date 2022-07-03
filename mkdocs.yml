@@ -56,9 +56,11 @@ markdown_extensions:
 nav:
   - Home: docs/index.md
   - Docs:
-    - Overview: docs/docs/overview.md
+    - Tests:
+      - Stability: docs/docs/overview.md
   - Code:
-    - Overview: docs/code/overview.md
+    - Tests:
+      - Stability: docs/code/stability.md
 
 extra_css:
   - css/style.css
