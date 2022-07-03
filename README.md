@@ -28,18 +28,18 @@ Full credit goes to the packages listed in this table.
 
 type | name | source package | source language | implemented
 ---|---|---|---|---
-correlation | acf | `statsmodels` | python | [x]
-correlation | pacf | `statsmodels` | python | [x]
-correlation | ccf | `statsmodels` | python | [x]
-stability | stability | `tsfeatures` | python | [x]
-stability | lumpiness | `tsfeatures` | python | [x]
-suitability | white-noise (ljung-box) | `` | python | [ ]
-stationarity | adf | `` | python | [ ]
-stationarity | kpss | `` | python | [ ]
-normality | shapiro | `` | python | [ ]
-seasonality | qs | `` |  | [ ]
-seasonality | seasonal strength | `` |  | [ ]
-regularity | regularity | `` |  | [ ]
+correlation | acf | `statsmodels` | python | - [x]
+correlation | pacf | `statsmodels` | python | - [x]
+correlation | ccf | `statsmodels` | python | - [x]
+stability | stability | `tsfeatures` | python | - [x]
+stability | lumpiness | `tsfeatures` | python | - [x]
+suitability | white-noise (ljung-box) | `` | python | - [ ]
+stationarity | adf | `` | python | - [ ]
+stationarity | kpss | `` | python | - [ ]
+normality | shapiro | `` | python | - [ ]
+seasonality | qs | `` |  | - [ ]
+seasonality | seasonal strength | `` |  | - [ ]
+regularity | regularity | `` |  | - [ ]
 
 
 ## Known limitations
