@@ -13,6 +13,7 @@ def qs(
     diff: bool_like = True,
     residuals: bool_like = False,
     autoarima: bool_like = True,
+) -> Dict[str, Union[str,float,ARIMA,None]]:
     """
     Summary:
         Implement the `QS` Seasonality test.
