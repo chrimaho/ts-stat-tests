@@ -1,3 +1,4 @@
+from typing import Dict, Union
 from pmdarima.arima import auto_arima, ARIMA
 from statsmodels.tools.validation import array_like, bool_like
 from typeguard import typechecked
@@ -72,10 +73,11 @@ def qs(
     """
 
     if x.isnull().all():
-        print(f"All observations are NaN.")
+        raise AttributeError(f"All observations are NaN.")
     if diff and residuals:
         print(
-            f"The differences of the residuals of a non-seasonal ARIMA model are computed and used. It may be better to either only take the differences or use the residuals."
+            f"The differences of the residuals of a non-seasonal ARIMA model are computed and used."
+            f"It may be better to either only take the differences or use the residuals."
         )
     if freq < 2:
         raise AttributeError(
@@ -127,16 +129,15 @@ def qs(
     # Pre-check
     if np.var(y[~np.isnan(y)]) == 0:
         raise ValueError(
-            f"The Series is a constant (possibly after transformations). QS-Test cannot be computed on constants."
+            f"The Series is a constant (possibly after transformations)."
+            f"QS-Test cannot be computed on constants."
         )
 
     # Test Statistic
     rho = acf(x=y, nlags=freq * 2, missing="drop")[[freq, freq * 2]]
     rho = np.array([0, 0]) if any(rho <= 0) else rho
-
     N = len(y[~np.isnan(y)])
     QS = N * (N + 2) * (rho[0] ** 2 / (N - freq) + rho[1] ** 2 / (N - freq * 2))
-
     Pval = chi2.sf(QS, 2)
 
     return {"stat": QS, "Pval": Pval, "test": "QS", "model": model}
