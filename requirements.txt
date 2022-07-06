@@ -2,3 +2,4 @@ tsfeatures
 sktime
 statsmodels
 numpy==1.22
+typeguard

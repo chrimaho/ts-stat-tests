@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 from tsfeatures import lumpiness as ts_lumpiness
 from tsfeatures import stability as ts_stability
+from typeguard import typechecked
 
 # from src.utils.docstrings import overwrite_docs_from
 
@@ -13,7 +14,8 @@ from tsfeatures import stability as ts_stability
 # ------------------------------------------------------------------------------#
 
 
-# overwrite_docs_from(parent_function=ts_stability)
+# @overwrite_docs_from(parent_function=ts_stability)
+@typechecked
 def stability(data: Union[np.ndarray, pd.DataFrame, pd.Series], freq: int = 1) -> float:
     """
     !!! Summary
@@ -47,6 +49,7 @@ def stability(data: Union[np.ndarray, pd.DataFrame, pd.Series], freq: int = 1) -
     return ts_stability(x=data, freq=freq)["stability"]
 
 
+@typechecked
 def is_stable(
     data: Union[np.ndarray, pd.DataFrame, pd.Series], freq: int = 1, alpha: float = 0.5
 ) -> bool:
@@ -89,6 +92,7 @@ def is_stable(
 # ------------------------------------------------------------------------------#
 
 
+@typechecked
 def lumpiness(data: Union[np.ndarray, pd.DataFrame, pd.Series], freq: int = 1) -> float:
     """
     !!! Summary
@@ -122,6 +126,7 @@ def lumpiness(data: Union[np.ndarray, pd.DataFrame, pd.Series], freq: int = 1) -
     return ts_lumpiness(x=data, freq=freq)["lumpiness"]
 
 
+@typechecked
 def is_lumpy(
     data: Union[np.ndarray, pd.DataFrame, pd.Series], freq: int = 1, alpha: float = 0.5
 ) -> bool:
