@@ -74,6 +74,6 @@ class SeasonalityTests(BaseTester):
         with self.assertRaises(AttributeError):
             qs(self.data, 1)
         with self.assertRaises(ValueError):
-            qs(pd.Series([1,1]), 12, True, True, False)
+            qs(pd.Series([1, 1]), 12, True, True, False)
         with self.assertRaises(ValueError):
-            qs(pd.Series([0,1]), 4, True, True, True)
+            qs(pd.Series([0, 1]), 4, True, True, True)
