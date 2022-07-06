@@ -13,7 +13,62 @@ def qs(
     diff: bool_like = True,
     residuals: bool_like = False,
     autoarima: bool_like = True,
-):
+    """
+    Summary:
+        Implement the `QS` Seasonality test.
+        
+    Params:
+        x (array_like):
+            The univariate time series data to test.
+        freq (int, optional):
+            The frequency of the time series data. Defaults to `0`.
+        diff (bool_like, optional):
+            Whether or not to run `np.diff()` over the data. Defaults to `True`.
+        residuals (bool_like, optional):
+            Whether or not to run & return the residuals from the function. Defaults to `False`.
+        autoarima (bool_like, optional):
+            Whether or not to run the `AutoARIMA()` algorithm over the data. Defaults to `True`.
+
+    Raises:
+        AttributeError:
+            If `x` is empty, or `freq` is too low for the data to be adequately tested.
+        ValueError:
+            If, after differencing the data (by using `np.diff()`), any of the values are `None` (or `Null` or `np.nan`), then it cannot be used for QS Testing.
+
+    Returns:
+        Dict[str, Union[str,float,ARIMA,type(None)]]:
+            The dictionary containing the information, attributes, and model from running the tests.
+
+    ???+ Info "Details"
+        This is a translation from the `R` language, which can be found in `qs()` function of the `seastests` package.
+        For more details on the original function, see:
+            - [github/seastests/qs.R](https://github.com/cran/seastests/blob/master/R/qs.R)
+            - [rdrr/seastests/qs](https://rdrr.io/cran/seastests/man/qs.html)
+            - [rdocumentation/seastests/qs](https://www.rdocumentation.org/packages/seastests/versions/0.15.4/topics/qs)
+            - [Machine Learning Mastery/How to Identify and Remove Seasonality from Time Series Data with Python](https://machinelearningmastery.com/time-series-seasonality-with-python)
+            - [StackOverflow/Simple tests for seasonality in Python](https://stackoverflow.com/questions/62754218/simple-tests-for-seasonality-in-python)
+
+    ???+ Example "Examples"
+        Basic usage:
+        ```python linenums="1"
+        >>> from sktime.datasets import load_airline
+        >>> data = load_airline()
+        >>> qs(x=data, freq=12)
+        {'stat': 194.4692892087745,
+         'Pval': 5.90922325801522e-43,
+         'test': 'QS',
+         'model': None}
+        ```
+        Advanced usage:
+        ```python linenums="1"
+        >>> from sktime.datasets import load_airline
+        >>> data = load_airline()
+        >>> qs(x=data, freq=12, diff=True, residuals=True, autoarima=True)
+        {'stat': 101.85929391917927,
+         'Pval': 7.612641184541459e-23,
+         'test': 'QS',
+         'model': ARIMA(order=(1, 1, 1), scoring_args={}, suppress_warnings=True)}
+    """
 
     if x.isnull().all():
         print(f"All observations are NaN.")
