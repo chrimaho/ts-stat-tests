@@ -1,3 +1,5 @@
+import numpy as np
+import pandas as pd
 from src.tests.test_base import BaseTester
 from src.seasonality import qs
 from pmdarima.arima import ARIMA
@@ -21,8 +23,8 @@ class SeasonalityTests(BaseTester):
         self.assertIsInstance(self.qs_result["model"], (dict, type(None), ARIMA))
 
         # To get the full list of necessary permutations, run:
-        # import itertools
-        # print(list(itertools.product(*[[True,False]]*3)))
+        # >>> import itertools
+        # >>> print(list(itertools.product(*[[True,False]]*3)))
 
         self.assertDictEqual(
             dict_slice_by_keys(qs(self.data, 12, True, True, True), ["stat", "Pval"]),
@@ -65,3 +67,13 @@ class SeasonalityTests(BaseTester):
             ),
             {"stat": 141.71278764765492, "Pval": 1.6883370644788516e-31},
         )
+
+    def test_qs_failures(self):
+        with self.assertRaises(AttributeError):
+            qs(pd.Series([None, None]), 12)
+        with self.assertRaises(AttributeError):
+            qs(self.data, 1)
+        with self.assertRaises(ValueError):
+            qs(pd.Series([1,1]), 12, True, True, False)
+        with self.assertRaises(ValueError):
+            qs(pd.Series([0,1]), 4, True, True, True)
