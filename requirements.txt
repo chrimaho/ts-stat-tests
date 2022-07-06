@@ -3,3 +3,5 @@ sktime
 statsmodels
 numpy==1.22
 typeguard
+pmdarima
+scipy
