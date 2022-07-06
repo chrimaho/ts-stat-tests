@@ -1,5 +1,5 @@
 pre-commit
-numpy
+numpy==1.22
 pandas
 ipykernel
 black
