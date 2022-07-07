@@ -1,4 +1,4 @@
-name: unit tests
+name: test suite
 
 on:
   push:
