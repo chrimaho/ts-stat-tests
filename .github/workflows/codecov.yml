@@ -3,10 +3,11 @@ name: test suite
 on:
   push:
     branches:
-      - "main"
+      - main
+      - develop
   pull_request:
     branches:
-      - "main"
+      - main
 
 jobs:
   run:
