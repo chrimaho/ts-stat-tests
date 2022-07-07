@@ -1,9 +1,12 @@
 import numpy as np
 import pandas as pd
-from pmdarima.arima import ARIMA
 import pytest
+from pmdarima.arima import ARIMA
+
+from src.seasonality import ch
+from src.seasonality import ocsb
+from src.seasonality import qs
 from src.tests.test_base import BaseTester
-from src.seasonality import ch, qs, ocsb
 
 
 class SeasonalityTests(BaseTester):
@@ -47,8 +50,8 @@ class SeasonalityTests(BaseTester):
                 residuals=residuals,
                 autoarima=autoarima,
             )
-            self.assertAlmostEqual(qs_result["stat"], expected_stat)
-            self.assertAlmostEqual(qs_result["Pval"], expected_pval)
+            self.assertAlmostEqual(qs_result["stat"], expected_stat, 5)
+            self.assertAlmostEqual(qs_result["Pval"], expected_pval, 5)
 
     def test_qs_failures(self):
         with self.assertRaises(AttributeError):
