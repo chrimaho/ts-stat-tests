@@ -8,6 +8,9 @@ import numpy as np
 from scipy.stats import chi2
 from src.correlation import acf
 
+"""
+For a really good article on CH & OCSB tests, check: [When A Time Series Only Quacks Like A Duck: Testing for Stationarity Before Running Forecast Models. With Python. And A Duckling Picture.](https://towardsdatascience.com/when-a-time-series-only-quacks-like-a-duck-10de9e165e)
+"""
 
 @typechecked
 def qs(
@@ -144,11 +147,13 @@ def qs(
     return {"stat": QS, "Pval": Pval, "test": "QS", "model": model}
 
 
+@typechecked
 def ocsb(x: array_like, m: int, lag_method: str = "aic", max_lag: int = 3):
     return OCSBTest(
         m=m, lag_method=lag_method, max_lag=max_lag
     ).estimate_seasonal_differencing_term(x)
 
 
+@typechecked
 def ch(x: array_like, m: int):
     return CHTest(m=m).estimate_seasonal_differencing_term(x)

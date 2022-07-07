@@ -6,7 +6,6 @@ from tsfeatures import lumpiness as ts_lumpiness
 from tsfeatures import stability as ts_stability
 from typeguard import typechecked
 
-# from src.utils.docstrings import overwrite_docs_from
 
 
 # ------------------------------------------------------------------------------#
@@ -14,7 +13,6 @@ from typeguard import typechecked
 # ------------------------------------------------------------------------------#
 
 
-# @overwrite_docs_from(parent_function=ts_stability)
 @typechecked
 def stability(data: Union[np.ndarray, pd.DataFrame, pd.Series], freq: int = 1) -> float:
     """
