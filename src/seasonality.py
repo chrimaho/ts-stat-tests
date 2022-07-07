@@ -1,5 +1,7 @@
 from typing import Dict, Union
-from pmdarima.arima import auto_arima, ARIMA
+from pmdarima.arima.arima import ARIMA
+from pmdarima.arima.auto import auto_arima
+from pmdarima.arima.seasonality import CHTest, OCSBTest
 from statsmodels.tools.validation import array_like, bool_like
 from typeguard import typechecked
 import numpy as np
@@ -71,7 +73,6 @@ def qs(
          'test': 'QS',
          'model': ARIMA(order=(1, 1, 1), scoring_args={}, suppress_warnings=True)}
     """
-
     if x.isnull().all():
         raise AttributeError(f"All observations are NaN.")
     if diff and residuals:
@@ -141,3 +142,13 @@ def qs(
     Pval = chi2.sf(QS, 2)
 
     return {"stat": QS, "Pval": Pval, "test": "QS", "model": model}
+
+
+def ocsb(x: array_like, m: int, lag_method: str = "aic", max_lag: int = 3):
+    return OCSBTest(
+        m=m, lag_method=lag_method, max_lag=max_lag
+    ).estimate_seasonal_differencing_term(x)
+
+
+def ch(x: array_like, m: int):
+    return CHTest(m=m).estimate_seasonal_differencing_term(x)
