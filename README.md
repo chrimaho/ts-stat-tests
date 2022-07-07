@@ -29,16 +29,19 @@ Full credit goes to the packages listed in this table.
 
 type | name | source package | source language | implemented
 ---|---|---|---|---
-correlation | acf | `statsmodels` | python | :white_check_mark:
-correlation | pacf | `statsmodels` | python | :white_check_mark:
-correlation | ccf | `statsmodels` | python | :white_check_mark:
-stability | stability | `tsfeatures` | python | :white_check_mark:
-stability | lumpiness | `tsfeatures` | python | :white_check_mark:
-suitability | white-noise (ljung-box) | `` | python | :white_large_square:
-stationarity | adf | `` | python | :white_large_square:
-stationarity | kpss | `` | python | :white_large_square:
-normality | shapiro | `` | python | :white_large_square:
-seasonality | qs | `` |  | :white_large_square:
+correlation | acf | `statsmodels` | Python | :white_check_mark:
+correlation | pacf | `statsmodels` | Python | :white_check_mark:
+correlation | ccf | `statsmodels` | Python | :white_check_mark:
+stability | stability | `tsfeatures` | Python | :white_check_mark:
+stability | lumpiness | `tsfeatures` | Python | :white_check_mark:
+suitability | white-noise (ljung-box) | `` | Python | :white_large_square:
+stationarity | adf | `` | Python | :white_large_square:
+stationarity | kpss | `` | Python | :white_large_square:
+stationarity | ppt | `` | Python | :white_large_square:
+normality | shapiro | `` | Python | :white_large_square:
+seasonality | qs | `` | R | :white_check_mark:
+seasonality | ocsb | `` | Python | :white_check_mark:
+seasonality | ch | `` | Python | :white_check_mark:
 seasonality | seasonal strength | `` |  | :white_large_square:
 regularity | regularity | `` |  | :white_large_square:
 
