@@ -4,9 +4,9 @@ from typing import Union
 
 import numpy as np
 from statsmodels.tools.validation import array_like
-from statsmodels.tsa.stattools import acf as st_acf
-from statsmodels.tsa.stattools import ccf as st_ccf
-from statsmodels.tsa.stattools import pacf as st_pacf
+from statsmodels.tsa.api import acf as st_acf
+from statsmodels.tsa.api import ccf as st_ccf
+from statsmodels.tsa.api import pacf as st_pacf
 from typeguard import typechecked
 
 
