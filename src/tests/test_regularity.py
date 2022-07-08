@@ -8,21 +8,30 @@ class TestRegularity(BaseTester):
         self.approx_result = is_regular(x=self.data, algorithm="approx", tolerance=20)
 
     def test_regularity(self):
-        self.assertDictEqual(
-            self.sample_result,
-            {
-                "result": True,
-                "entropy": 0.6177074729583698,
-                "tolerance": 23.909808306554297,
-            },
+
+        self.assertListEqual(
+            list(self.sample_result.keys()), ["result", "entropy", "tolerance"]
         )
-        self.assertDictEqual(
-            self.approx_result,
-            {
-                "result": True,
-                "entropy": 0.6451264780416452,
-                "tolerance": 20,
-            },
+        self.assertIsInstance(self.sample_result["result"], bool)
+        self.assertIsInstance(self.sample_result["entropy"], (float, int))
+        self.assertIsInstance(self.sample_result["tolerance"], (float, int))
+
+        self.assertAlmostEqual(
+            self.sample_result["entropy"],
+            0.6177074729583698,
+        )
+        self.assertAlmostEqual(
+            self.sample_result["tolerance"],
+            23.909808306554297,
+        )
+
+        self.assertAlmostEqual(
+            self.approx_result["entropy"],
+            0.6451264780416452,
+        )
+        self.assertEqual(
+            self.approx_result["tolerance"],
+            20,
         )
 
     def test_regularity_errors(self):
