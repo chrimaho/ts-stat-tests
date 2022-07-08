@@ -2,8 +2,9 @@ site_name: Time Series Statistical Tests
 site_dir: www
 site_author: chrimaho
 site_description: A suite of statistical tests for time-series data
-repo_name: "ts-stat-tests"
+repo_name: "chrimaho/ts-stat-tests"
 repo_url: https://github.com/chrimaho/ts-stat-tests
+docs_dir: docs
 
 theme:
   name: material
