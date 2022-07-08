@@ -39,11 +39,13 @@ stationarity | adf | `` | Python | :white_large_square:
 stationarity | kpss | `` | Python | :white_large_square:
 stationarity | ppt | `` | Python | :white_large_square:
 normality | shapiro | `` | Python | :white_large_square:
-seasonality | qs | `` | R | :white_check_mark:
-seasonality | ocsb | `` | Python | :white_check_mark:
-seasonality | ch | `` | Python | :white_check_mark:
-seasonality | seasonal strength | `` |  | :white_large_square:
-regularity | regularity | `` |  | :white_large_square:
+seasonality | qs | `seastests` | R | :white_check_mark:
+seasonality | ocsb | `pmdarima` | Python | :white_check_mark:
+seasonality | ch | `pmdarima` | Python | :white_check_mark:
+seasonality | seasonal strength | `tsfeatures` | Python | :white_check_mark:
+seasonality | trend strength | `tsfeatures` | Python | :white_check_mark:
+seasonality | spikiness | `tsfeatures` | Python | :white_check_mark:
+regularity | regularity | `antropy` | python | :white_check_mark:
 
 
 ## Known limitations
