@@ -12,27 +12,23 @@ class TestRegularity(BaseTester):
         self.assertListEqual(
             list(self.sample_result.keys()), ["result", "entropy", "tolerance"]
         )
-        self.assertIsInstance(self.sample_result["result"], bool)
-        self.assertIsInstance(self.sample_result["entropy"], (float, int))
-        self.assertIsInstance(self.sample_result["tolerance"], (float, int))
 
-        self.assertAlmostEqual(
-            self.sample_result["entropy"],
-            0.6177074729583698,
-        )
-        self.assertAlmostEqual(
-            self.sample_result["tolerance"],
-            23.909808306554297,
-        )
+        params = [
+            (self.sample_result["result"], bool),
+            (self.sample_result["entropy"], (float, int)),
+            (self.sample_result["tolerance"], (float, int)),
+        ]
+        for value, expected in params:
+            self.assertIsInstance(value, expected)
 
-        self.assertAlmostEqual(
-            self.approx_result["entropy"],
-            0.6451264780416452,
-        )
-        self.assertEqual(
-            self.approx_result["tolerance"],
-            20,
-        )
+        params = [
+            (self.sample_result["entropy"], 0.6177074729583698),
+            (self.sample_result["tolerance"], 23.909808306554297),
+            (self.approx_result["entropy"], 0.6451264780416452),
+            (self.approx_result["tolerance"], 20),
+        ]
+        for value, expected in params:
+            self.assertAlmostEqual(value, expected)
 
     def test_regularity_errors(self):
         with self.assertRaises(ValueError):
