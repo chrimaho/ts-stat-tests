@@ -17,7 +17,7 @@
 
 ## Tests
 
-!!! note "Details"
+!!! details "Details"
 
     === "Test Info"
 
