@@ -18,6 +18,9 @@ from statsmodels.tools.validation import array_like
 from typeguard import typechecked
 
 
+__all__ = ["entropy", "is_regular"]
+
+
 def approx_entropy(x: array_like, order: int = 2, metric: str = "chebyshev") -> float:
     return a_app_entropy(x=x, order=order, metric=metric)
 

@@ -3,14 +3,19 @@ from pmdarima.arima.arima import ARIMA
 from pmdarima.arima.auto import auto_arima
 from pmdarima.arima.seasonality import CHTest, OCSBTest
 from statsmodels.tools.validation import array_like, bool_like
+from statsmodels.tsa.seasonal import STL
 from typeguard import typechecked
 import numpy as np
 from scipy.stats import chi2
 from src.correlation import acf
 
+
 """
 For a really good article on CH & OCSB tests, check: [When A Time Series Only Quacks Like A Duck: Testing for Stationarity Before Running Forecast Models. With Python. And A Duckling Picture.](https://towardsdatascience.com/when-a-time-series-only-quacks-like-a-duck-10de9e165e)
 """
+
+
+__all__ = ["qs", "ocsb", "ch", "seasonal_strength", "trend_strength", "spikiness"]
 
 
 @typechecked
@@ -158,3 +163,132 @@ def ocsb(x: array_like, m: int, lag_method: str = "aic", max_lag: int = 3):
 @typechecked
 def ch(x: array_like, m: int):
     return CHTest(m=m).estimate_seasonal_differencing_term(x)
+
+
+def _get_stlfit(x: array_like, m: int) -> Dict[str, Union[np.ndarray, STL]]:
+    stlfit = STL(x, m, 13).fit()
+    return {
+        "model": stlfit,
+        "trend": stlfit.trend,
+        "seasonal": stlfit.seasonal,
+        "residuals": stlfit.resid,
+    }
+
+
+def _get_stlvar(x: array_like, m: int) -> Dict[str, np.ndarray]:
+    stlfit = _get_stlfit(x=x, m=m)
+    return {
+        "varx": np.nanvar(x, ddof=1),
+        "vare": np.nanvar(stlfit.get("residuals"), ddof=1),
+        "vara": np.nanvar(stlfit.get("residuals") + stlfit.get("seasonal"), ddof=1),
+        "vardeseason": np.nanvar(x - stlfit.get("seasonal")),
+        "vardetrend": np.nanvar(x - stlfit.get("trend")),
+    }
+
+
+def seasonal_strength(x: array_like, m: int) -> float:
+    """
+    Summary:
+        The seasonal strength of a univariate timeseries data set.
+
+    Params:
+        x (array_like):
+            The time series data set.
+        m (int):
+            The frequency of the time series data set.
+
+    Returns:
+        float:
+            The seasonal strength score.
+
+    ???+ Info "Details"
+        All credit to the [`tsfeatures`](http://pkg.robjhyndman.com/tsfeatures/) library.
+        This code is a direct copy+paste from the [`tsfeatures.py`](https://github.com/Nixtla/tsfeatures/blob/main/tsfeatures/tsfeatures.py) module.
+
+    ???+ Example "Examples"
+        _description_
+        ```python linenums="1"
+        >>> _description_
+        ```
+    """
+    if not m > 1:
+        return 0
+    else:
+        stlvar = _get_stlvar(x=x, m=m)
+        if (
+            stlvar.get("varx") < np.finfo(float).eps
+            or stlvar.get("vara") < np.finfo(float).eps
+        ):
+            return 0
+        else:
+            return max(0, min(1, 1 - stlvar.get("vare") / stlvar.get("vara")))
+
+
+def trend_strength(x: array_like, m: int) -> float:
+    """
+    Summary:
+        The trend strength of a univariate timeseries data set.
+
+    Params:
+        x (array_like):
+            The time series data set.
+        m (int):
+            The frequency of the time series data set.
+
+    Returns:
+        float:
+            The trend strength score.
+
+    ???+ Info "Details"
+        All credit to the [`tsfeatures`](http://pkg.robjhyndman.com/tsfeatures/) library.
+        This code is a direct copy+paste from the [`tsfeatures.py`](https://github.com/Nixtla/tsfeatures/blob/main/tsfeatures/tsfeatures.py) module.
+
+    ???+ Example "Examples"
+        _description_
+        ```python linenums="1"
+        >>> _description_
+        ```
+    """
+    if not m > 1:
+        return 0
+    else:
+        stlvar = _get_stlvar(x=x, m=m)
+        if (
+            stlvar.get("varx") < np.finfo(float).eps
+            or stlvar.get("vardeseason") / stlvar.get("varx") < 1e-10
+        ):
+            return 0
+        else:
+            return max(0, min(1, 1 - stlvar.get("vare") / stlvar.get("vardeseason")))
+
+
+def spikiness(x: array_like, m: int) -> float:
+    """
+    Summary:
+        The spikiness of a univariate timeseries data set.
+
+    Params:
+        x (array_like):
+            The time series data set.
+        m (int):
+            The frequency of the time series data set.
+
+    Returns:
+        float:
+            The spikiness score.
+
+    ???+ Info "Details"
+        All credit to the [`tsfeatures`](http://pkg.robjhyndman.com/tsfeatures/) library.
+        This code is a direct copy+paste from the [`tsfeatures.py`](https://github.com/Nixtla/tsfeatures/blob/main/tsfeatures/tsfeatures.py) module.
+
+    ???+ Example "Examples"
+        _description_
+        ```python linenums="1"
+        >>> _description_
+        ```
+    """
+    n = len(x)
+    stlfit = _get_stlfit(x=x, m=m)
+    d = (stlfit.get("residuals") - np.nanmean(stlfit.get("residuals"))) ** 2
+    varloo = (np.nanvar(stlfit.get("residuals"), ddof=1) * (n - 1) - d) / (n - 2)
+    return np.nanvar(varloo, ddof=1)

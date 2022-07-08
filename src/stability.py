@@ -7,6 +7,9 @@ from tsfeatures import stability as ts_stability
 from typeguard import typechecked
 
 
+__all__ = ["stability", "is_stable", "lumpiness", "is_lumpy"]
+
+
 # ------------------------------------------------------------------------------#
 # Stability                                                                  ####
 # ------------------------------------------------------------------------------#
