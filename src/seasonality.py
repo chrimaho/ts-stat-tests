@@ -215,9 +215,10 @@ def seasonal_strength(x: array_like, m: int) -> float:
         return 0
     else:
         stlvar = _get_stlvar(x=x, m=m)
-        if stlvar.get("varx") < np.finfo(float).eps:
-            return 0
-        elif stlvar.get("vara") < np.finfo(float).eps:
+        if (
+            stlvar.get("varx") < np.finfo(float).eps
+            or stlvar.get("vara") < np.finfo(float).eps
+        ):
             return 0
         else:
             return max(0, min(1, 1 - stlvar.get("vare") / stlvar.get("vara")))
@@ -252,9 +253,10 @@ def trend_strength(x: array_like, m: int) -> float:
         return 0
     else:
         stlvar = _get_stlvar(x=x, m=m)
-        if stlvar.get("varx") < np.finfo(float).eps:
-            return 0
-        elif stlvar.get("vardeseason") / stlvar.get("varx") < 1e-10:
+        if (
+            stlvar.get("varx") < np.finfo(float).eps
+            or stlvar.get("vardeseason") / stlvar.get("varx") < 1e-10
+        ):
             return 0
         else:
             return max(0, min(1, 1 - stlvar.get("vare") / stlvar.get("vardeseason")))
