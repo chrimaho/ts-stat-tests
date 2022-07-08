@@ -72,9 +72,13 @@ class SeasonalityTests(BaseTester):
 
     def test_seasonal_strength(self) -> None:
         self.assertAlmostEqual(self.seasonal_strength_result, 0.9815304216549953)
+        self.assertEqual(seasonal_strength(self.data, 1), 0)
+        self.assertEqual(seasonal_strength([1, 1], 2), 0)
 
     def test_trend_strength(self) -> None:
         self.assertAlmostEqual(self.trend_strength_result, 0.9971375301013928)
+        self.assertEqual(trend_strength(self.data, 1), 0)
+        self.assertEqual(trend_strength([1, 1], 2), 0)
 
     def test_spikiness(self) -> None:
         self.assertAlmostEqual(self.spikiness_result, 0.16276032794671697)
