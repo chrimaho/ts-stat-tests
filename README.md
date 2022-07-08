@@ -2,7 +2,7 @@
 
 <!-- [![pypi](https://img.shields.io/pypi/v/ts-eval)](https://pypi.org/project/ts-eval/) -->
 <!-- [![python3](https://img.shields.io/pypi/pyversions/ts-eval)](https://www.python.org/downloads/release/python-3105/) -->
-[![unit tests](https://github.com/chrimaho/ts-stat-tests/actions/workflows/codecov.yml/badge.svg)](https://github.com/chrimaho/ts-stat-tests/actions/workflows/codecov.yml)
+[![test suite](https://github.com/chrimaho/ts-stat-tests/actions/workflows/codecov.yml/badge.svg?branch=develop)](https://github.com/chrimaho/ts-stat-tests/actions/workflows/codecov.yml)
 [![codecov](https://codecov.io/gh/chrimaho/ts-stat-tests/branch/main/graph/badge.svg)](https://codecov.io/gh/chrimaho/ts-stat-tests)
 [![docs ci](https://github.com/chrimaho/ts-stat-tests/actions/workflows/docs-ci.yml/badge.svg)](https://github.com/chrimaho/ts-stat-tests/actions/workflows/docs-ci.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
