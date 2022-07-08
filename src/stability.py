@@ -7,7 +7,6 @@ from tsfeatures import stability as ts_stability
 from typeguard import typechecked
 
 
-
 # ------------------------------------------------------------------------------#
 # Stability                                                                  ####
 # ------------------------------------------------------------------------------#
