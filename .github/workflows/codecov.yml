@@ -27,7 +27,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install pipenv
           pipenv --python 3.9 install --requirements requirements.txt --verbose --ignore-pipfile --no-site-packages --skip-lock
-          pipenv --python 3.9 install --requirements requirements-tst.txt --verbose --ignore-pipfile --no-site-packages --skip-lock
+          pipenv --python 3.9 install --requirements requirements-tst.txt --ignore-pipfile --no-site-packages --skip-lock
+          pipenv run pip list
+          pipenv --python 3.9 install antropy --ignore-pipfile --no-site-packages --skip-lock
+          pipenv run pip list
 
       - name: Test
         run: |
