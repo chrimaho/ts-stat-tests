@@ -1,21 +1,22 @@
-import numpy as np
 import pandas as pd
-import pytest
 from pmdarima.arima import ARIMA
 
-from src.seasonality import ch
+from src.seasonality import ch, seasonal_strength, spikiness, trend_strength
 from src.seasonality import ocsb
 from src.seasonality import qs
 from src.tests.test_base import BaseTester
 
 
 class SeasonalityTests(BaseTester):
-    def setUp(self):
+    def setUp(self) -> None:
         self.qs_result = qs(x=self.data, freq=12)
         self.ocsb_result = ocsb(x=self.data, m=12)
-        self.ch_test = ch(x=self.data, m=12)
+        self.ch_result = ch(x=self.data, m=12)
+        self.seasonal_strength_result = seasonal_strength(x=self.data, m=12)
+        self.trend_strength_result = trend_strength(x=self.data, m=12)
+        self.spikiness_result = spikiness(x=self.data, m=12)
 
-    def test_qs_defaults(self):
+    def test_qs_defaults(self) -> None:
         self.assertIsInstance(self.qs_result, dict)
         self.assertListEqual(
             list(self.qs_result.keys()), ["stat", "Pval", "test", "model"]
@@ -25,7 +26,7 @@ class SeasonalityTests(BaseTester):
         self.assertIsInstance(self.qs_result["test"], str)
         self.assertIsInstance(self.qs_result["model"], (dict, type(None), ARIMA))
 
-    def test_qs(self):
+    def test_qs(self) -> None:
 
         # To get the full list of necessary permutations, run:
         # >>> import itertools
@@ -53,7 +54,7 @@ class SeasonalityTests(BaseTester):
             self.assertAlmostEqual(qs_result["stat"], expected_stat, 5)
             self.assertAlmostEqual(qs_result["Pval"], expected_pval, 5)
 
-    def test_qs_failures(self):
+    def test_qs_failures(self) -> None:
         with self.assertRaises(AttributeError):
             qs(pd.Series([None, None]), 12)
         with self.assertRaises(AttributeError):
@@ -63,8 +64,17 @@ class SeasonalityTests(BaseTester):
         with self.assertRaises(ValueError):
             qs(pd.Series([0, 1]), 4, True, True, True)
 
-    def test_ocsb(self):
+    def test_ocsb(self) -> None:
         self.assertEqual(self.ocsb_result, 1)
 
-    def test_ch(self):
-        self.assertEqual(self.ch_test, 0)
+    def test_ch(self) -> None:
+        self.assertEqual(self.ch_result, 0)
+
+    def test_seasonal_strength(self) -> None:
+        self.assertAlmostEqual(self.seasonal_strength_result, 0.9815304216549953)
+
+    def test_trend_strength(self) -> None:
+        self.assertAlmostEqual(self.trend_strength_result, 0.9971375301013928)
+
+    def test_spikiness(self) -> None:
+        self.assertAlmostEqual(self.spikiness_result, 0.16276032794671697)
