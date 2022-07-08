@@ -1,9 +1,7 @@
-import numpy as np
 import pandas as pd
-import pytest
 from pmdarima.arima import ARIMA
 
-from src.seasonality import ch
+from src.seasonality import ch, seasonal_strength, spikiness, trend_strength
 from src.seasonality import ocsb
 from src.seasonality import qs
 from src.tests.test_base import BaseTester
@@ -13,7 +11,10 @@ class SeasonalityTests(BaseTester):
     def setUp(self):
         self.qs_result = qs(x=self.data, freq=12)
         self.ocsb_result = ocsb(x=self.data, m=12)
-        self.ch_test = ch(x=self.data, m=12)
+        self.ch_result = ch(x=self.data, m=12)
+        self.seasonal_strength_result = seasonal_strength(x=self.data, m=12)
+        self.trend_strength_result = trend_strength(x=self.data, m=12)
+        self.spikiness_result = spikiness(x=self.data, m=12)
 
     def test_qs_defaults(self):
         self.assertIsInstance(self.qs_result, dict)
@@ -67,4 +68,17 @@ class SeasonalityTests(BaseTester):
         self.assertEqual(self.ocsb_result, 1)
 
     def test_ch(self):
-        self.assertEqual(self.ch_test, 0)
+        self.assertEqual(self.ch_result, 0)
+
+    def test_seasonal_strength(self):
+        self.assertAlmostEqual(self.seasonal_strength_result, 0.9815304216549953)
+        self.assertEqual(seasonal_strength(self.data, 1), 0)
+        self.assertEqual(seasonal_strength([1, 1], 2), 0)
+
+    def test_trend_strength(self):
+        self.assertAlmostEqual(self.trend_strength_result, 0.9971375301013928)
+        self.assertEqual(trend_strength(self.data, 1), 0)
+        self.assertEqual(trend_strength([1, 1], 2), 0)
+
+    def test_spikiness(self):
+        self.assertAlmostEqual(self.spikiness_result, 0.16276032794671697)
