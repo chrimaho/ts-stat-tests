@@ -12,7 +12,7 @@ As such, the [`antropy`](https://raphaelvallat.com/antropy/build/html/index.html
 """
 
 from typing import Union
-from antropy import a_app_entropy, a_sample_entropy
+from antropy import app_entropy as a_app_entropy, sample_entropy as a_sample_entropy
 import numpy as np
 from statsmodels.tools.validation import array_like
 from typeguard import typechecked
