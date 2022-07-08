@@ -55,9 +55,9 @@ def is_regular(
     tolerance: Union[str, float, None] = "default",
 ):
     if isinstance(tolerance, (float, int)):
-        pass
+        tol = tolerance
     elif tolerance in ["default", None]:
-        tolerance = 0.2 * np.std(a=x)
+        tol = 0.2 * np.std(a=x)
     else:
         raise ValueError(
             f"Invalid option for `tolerance` parameter: {tolerance}.\n"
@@ -67,5 +67,5 @@ def is_regular(
             f"- The value `None`."
         )
     value = entropy(x=x, order=order, metric=metric, algorithm=algorithm)
-    result = True if value < tolerance else False
-    return {"result": result, "entropy": value, "tolerance": tolerance}
+    result = True if value < tol else False
+    return {"result": result, "entropy": value, "tolerance": tol}
