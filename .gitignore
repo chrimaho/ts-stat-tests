@@ -6,6 +6,7 @@ Pipfile
 .mypy_cache/
 cov-report/
 .coverage/
+www/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
