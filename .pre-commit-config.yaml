@@ -8,7 +8,8 @@ repos:
     rev: 22.6.0
     hooks:
       - id: black
-        args: ["--safe"]
+        args:
+          - "--safe"
 
   # Fixes
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -25,14 +26,17 @@ repos:
     rev: v2.6.0
     hooks:
       - id: reorder-python-imports
-        args: ["--application-directories=.:src", "--py37-plus"]
+        args:
+          - "--application-directories=.:src"
+          - "--py37-plus"
 
   # Find any outdated syntax and replace with modern equivalents
   - repo: https://github.com/asottile/pyupgrade
     rev: v2.29.0
     hooks:
       - id: pyupgrade
-        args: ["--py37-plus"]
+        args:
+          - "--py37-plus"
 
   # Run MyPy type checks
   - repo: https://github.com/pre-commit/mirrors-mypy
@@ -40,4 +44,8 @@ repos:
     hooks:
       - id: mypy
         files: src
-        args: ["--ignore-missing-imports", "--pretty", "--install-types", "--non-interactive"]
+        args:
+          - "--ignore-missing-imports"
+          - "--pretty"
+          - "--install-types"
+          - "--non-interactive"
