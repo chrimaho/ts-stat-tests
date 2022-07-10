@@ -61,6 +61,7 @@ nav:
                 - Stability: docs/docs/overview.md
     - Code:
           - Overview: docs/code/overview.md
+          - Unit Testing: docs/code/unit_testing.md
           - Tests:
                 - Stability: docs/code/stability.md
                 - Correlation: docs/code/correlation.md
