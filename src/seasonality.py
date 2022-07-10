@@ -1,12 +1,17 @@
-from typing import Dict, Union
+from typing import Dict
+from typing import Union
+
+import numpy as np
 from pmdarima.arima.arima import ARIMA
 from pmdarima.arima.auto import auto_arima
-from pmdarima.arima.seasonality import CHTest, OCSBTest
-from statsmodels.tools.validation import array_like, bool_like
+from pmdarima.arima.seasonality import CHTest
+from pmdarima.arima.seasonality import OCSBTest
+from scipy.stats import chi2
+from statsmodels.tools.validation import array_like
+from statsmodels.tools.validation import bool_like
 from statsmodels.tsa.seasonal import STL
 from typeguard import typechecked
-import numpy as np
-from scipy.stats import chi2
+
 from src.correlation import acf
 
 
@@ -179,10 +184,10 @@ def _get_stlvar(x: array_like, m: int) -> Dict[str, np.ndarray]:
     stlfit = _get_stlfit(x=x, m=m)
     return {
         "varx": np.nanvar(x, ddof=1),
-        "vare": np.nanvar(stlfit.get("residuals"), ddof=1),
-        "vara": np.nanvar(stlfit.get("residuals") + stlfit.get("seasonal"), ddof=1),
-        "vardeseason": np.nanvar(x - stlfit.get("seasonal")),
-        "vardetrend": np.nanvar(x - stlfit.get("trend")),
+        "vare": np.nanvar(stlfit["residuals"], ddof=1),
+        "vara": np.nanvar(stlfit["residuals"] + stlfit["seasonal"], ddof=1),
+        "vardeseason": np.nanvar(x - stlfit["seasonal"]),
+        "vardetrend": np.nanvar(x - stlfit["trend"]),
     }
 
 
@@ -203,7 +208,7 @@ def seasonal_strength(x: array_like, m: int) -> float:
 
     ???+ Info "Details"
         All credit to the [`tsfeatures`](http://pkg.robjhyndman.com/tsfeatures/) library.
-        This code is a direct copy+paste from the [`tsfeatures.py`](https://github.com/Nixtla/tsfeatures/blob/main/tsfeatures/tsfeatures.py) module.
+        This code is a direct copy+paste from the [`tsfeatures.py`](https://github.com/Nixtla/tsfeatures/blob/master/tsfeatures/tsfeatures.py) module.
 
     ???+ Example "Examples"
         _description_
@@ -215,13 +220,10 @@ def seasonal_strength(x: array_like, m: int) -> float:
         return 0
     else:
         stlvar = _get_stlvar(x=x, m=m)
-        if (
-            stlvar.get("varx") < np.finfo(float).eps
-            or stlvar.get("vara") < np.finfo(float).eps
-        ):
+        if stlvar["varx"] < np.finfo(float).eps or stlvar["vara"] < np.finfo(float).eps:
             return 0
         else:
-            return max(0, min(1, 1 - stlvar.get("vare") / stlvar.get("vara")))
+            return max(0, min(1, 1 - stlvar["vare"] / stlvar["vara"]))
 
 
 def trend_strength(x: array_like, m: int) -> float:
@@ -241,7 +243,7 @@ def trend_strength(x: array_like, m: int) -> float:
 
     ???+ Info "Details"
         All credit to the [`tsfeatures`](http://pkg.robjhyndman.com/tsfeatures/) library.
-        This code is a direct copy+paste from the [`tsfeatures.py`](https://github.com/Nixtla/tsfeatures/blob/main/tsfeatures/tsfeatures.py) module.
+        This code is a direct copy+paste from the [`tsfeatures.py`](https://github.com/Nixtla/tsfeatures/blob/master/tsfeatures/tsfeatures.py) module.
 
     ???+ Example "Examples"
         _description_
@@ -254,12 +256,12 @@ def trend_strength(x: array_like, m: int) -> float:
     else:
         stlvar = _get_stlvar(x=x, m=m)
         if (
-            stlvar.get("varx") < np.finfo(float).eps
-            or stlvar.get("vardeseason") / stlvar.get("varx") < 1e-10
+            stlvar["varx"] < np.finfo(float).eps
+            or stlvar["vardeseason"] / stlvar["varx"] < 1e-10
         ):
             return 0
         else:
-            return max(0, min(1, 1 - stlvar.get("vare") / stlvar.get("vardeseason")))
+            return max(0, min(1, 1 - stlvar["vare"] / stlvar["vardeseason"]))
 
 
 def spikiness(x: array_like, m: int) -> float:
@@ -279,7 +281,7 @@ def spikiness(x: array_like, m: int) -> float:
 
     ???+ Info "Details"
         All credit to the [`tsfeatures`](http://pkg.robjhyndman.com/tsfeatures/) library.
-        This code is a direct copy+paste from the [`tsfeatures.py`](https://github.com/Nixtla/tsfeatures/blob/main/tsfeatures/tsfeatures.py) module.
+        This code is a direct copy+paste from the [`tsfeatures.py`](https://github.com/Nixtla/tsfeatures/blob/master/tsfeatures/tsfeatures.py) module.
 
     ???+ Example "Examples"
         _description_
@@ -289,6 +291,6 @@ def spikiness(x: array_like, m: int) -> float:
     """
     n = len(x)
     stlfit = _get_stlfit(x=x, m=m)
-    d = (stlfit.get("residuals") - np.nanmean(stlfit.get("residuals"))) ** 2
-    varloo = (np.nanvar(stlfit.get("residuals"), ddof=1) * (n - 1) - d) / (n - 2)
+    d = (stlfit["residuals"] - np.nanmean(stlfit["residuals"])) ** 2
+    varloo = (np.nanvar(stlfit["residuals"], ddof=1) * (n - 1) - d) / (n - 2)
     return np.nanvar(varloo, ddof=1)
