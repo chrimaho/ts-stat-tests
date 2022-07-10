@@ -10,10 +10,12 @@ As quoted from: https://www.machinelearningplus.com/time-series/time-series-anal
 
 As such, the [`antropy`](https://raphaelvallat.com/antropy/build/html/index.html) package will be used to calculate these values
 """
-
 from typing import Union
-from antropy import app_entropy as a_app_entropy, sample_entropy as a_sample_entropy
+
 import numpy as np
+from antropy import app_entropy as a_app_entropy
+from antropy import sample_entropy as a_sample_entropy
+from antropy import spectral_entropy as a_spectral_entropy
 from statsmodels.tools.validation import array_like
 from typeguard import typechecked
 
@@ -21,28 +23,54 @@ from typeguard import typechecked
 __all__ = ["entropy", "is_regular"]
 
 
+@typechecked
 def approx_entropy(x: array_like, order: int = 2, metric: str = "chebyshev") -> float:
     return a_app_entropy(x=x, order=order, metric=metric)
 
 
+@typechecked
 def sample_entropy(x: array_like, order: int = 2, metric: str = "chebyshev") -> float:
     return a_sample_entropy(x=x, order=order, metric=metric)
 
 
+@typechecked
+def spectral_entropy(
+    x: array_like,
+    sf: float = 1,
+    method: str = "fft",
+    nperseg: int = None,
+    normalize: bool = False,
+    axis: int = -1,
+) -> float:
+    return a_spectral_entropy(
+        x=x, sf=sf, method=method, nperseg=nperseg, normalize=normalize, axis=axis
+    )
+
+
+@typechecked
 def entropy(
-    x: array_like, order: int = 2, metric: str = "chebyshev", algorithm: str = "sample"
+    x: array_like,
+    order: int = 2,
+    sf: float = 1,
+    metric: str = "chebyshev",
+    algorithm: str = "sample",
+    normalize: bool = True,
 ) -> float:
     sampl_options = ["sample", "sampl", "samp"]
     aprox_options = ["app", "aprox", "approx"]
+    spect_options = ["spec", "spect", "spectral"]
     if algorithm in sampl_options:
         return sample_entropy(x=x, order=order, metric=metric)
     elif algorithm in aprox_options:
         return approx_entropy(x=x, order=order, metric=metric)
+    elif algorithm in spect_options:
+        return spectral_entropy(x=x, sf=sf, normalize=normalize)
     else:
         raise ValueError(
             f"Invalid option for `algorithm` parameter: {algorithm}.\n"
             f"For running the 'Sample Entropy' algorithm, use one of: {sampl_options}.\n"
-            f"Fur running the 'Approximate Entropy' algorithm, use one of: {aprox_options}. "
+            f"For running the 'Approximate Entropy' algorithm, use one of: {aprox_options}.\n"
+            f"For running the 'Spectral Entropy' algorithm, use one of: {spect_options}."
         )
 
 
@@ -50,9 +78,11 @@ def entropy(
 def is_regular(
     x: array_like,
     order: int = 2,
+    sf: int = 1,
     metric: str = "chebyshev",
     algorithm: str = "sample",
     tolerance: Union[str, float, None] = "default",
+    normalize: bool = True,
 ):
     if isinstance(tolerance, (float, int)):
         tol = tolerance
@@ -66,6 +96,8 @@ def is_regular(
             f"- String with value `default`,\n"
             f"- The value `None`."
         )
-    value = entropy(x=x, order=order, metric=metric, algorithm=algorithm)
+    value = entropy(
+        x=x, order=order, sf=sf, metric=metric, algorithm=algorithm, normalize=normalize
+    )
     result = True if value < tol else False
     return {"result": result, "entropy": value, "tolerance": tol}
